@@ -36,11 +36,18 @@
   [model addSection:@"Quick settings"];
   [model
       addItem:[[TKMCheckmarkModelItem alloc] initWithStyle:UITableViewCellStyleDefault
-                                                     title:@"Allow cheating"
+                                                     title:@"Ignore typos"
                                                   subtitle:nil
-                                                        on:Settings.enableCheats
+                                                        on:Settings.ignoreTypos
                                                     target:self
-                                                    action:@selector(enableCheatsSwitchChanged:)]];
+                                                    action:@selector(ignoreTyposSwitchChanged:)]];
+  [model
+      addItem:[[TKMCheckmarkModelItem alloc] initWithStyle:UITableViewCellStyleDefault
+                                                     title:@"Add synonyms"
+                                                  subtitle:nil
+                                                        on:Settings.addSynonyms
+                                                    target:self
+                                                    action:@selector(addSynonymsSwitchChanged:)]];
   [model addItem:[[TKMCheckmarkModelItem alloc]
                      initWithStyle:UITableViewCellStyleDefault
                              title:@"Autoreveal answers"
@@ -119,8 +126,12 @@
 
 #pragma mark - Handlers.
 
-- (void)enableCheatsSwitchChanged:(TKMCheckmarkModelItem *)item {
-  Settings.enableCheats = item.on;
+- (void)ignoreTyposSwitchChanged:(TKMCheckmarkModelItem *)item {
+  Settings.ignoreTypos = item.on;
+}
+
+- (void)addSynonymsSwitchChanged:(TKMCheckmarkModelItem *)item {
+  Settings.addSynonyms = item.on;
 }
 
 - (void)showAnswerImmediatelySwitchChanged:(TKMCheckmarkModelItem *)item {

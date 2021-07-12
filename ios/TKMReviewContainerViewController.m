@@ -70,7 +70,7 @@
 #pragma mark - ReviewViewControllerDelegate
 
 - (BOOL)reviewViewControllerAllowsCheatsForReviewItem:(ReviewItem *)reviewItem {
-  return Settings.enableCheats;
+  return Settings.ignoreTypos || Settings.addSynonyms;
 }
 
 - (void)reviewViewController:(ReviewViewController *)reviewViewController

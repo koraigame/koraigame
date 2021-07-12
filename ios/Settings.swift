@@ -192,6 +192,16 @@ struct A<T: Sequence, E: RawRepresentable> where T.Element == E, E.RawValue: Cod
     set(n) { S.set(n, #keyPath(showStatsSection)) }
   }
 
+  static var alwaysShowArrow: Bool {
+    get { return S.get(true, #keyPath(alwaysShowArrow)) }
+    set(n) { S.set(n, #keyPath(alwaysShowArrow)) }
+  }
+
+  static var expandSubmitButton: Bool {
+    get { return S.get(false, #keyPath(expandSubmitButton)) }
+    set(n) { S.set(n, #keyPath(expandSubmitButton)) }
+  }
+
   static var reviewOrder: ReviewOrder {
     get { return E.get(ReviewOrder.random, #keyPath(reviewOrder)) }
     set(n) { E.set(n, #keyPath(reviewOrder)) }
@@ -237,9 +247,14 @@ struct A<T: Sequence, E: RawRepresentable> where T.Element == E, E.RawValue: Cod
     set(n) { S.set(n, #keyPath(exactMatch)) }
   }
 
-  static var enableCheats: Bool {
-    get { return S.get(true, #keyPath(enableCheats)) }
-    set(n) { S.set(n, #keyPath(exactMatch)) }
+  static var ignoreTypos: Bool {
+    get { return S.get(true, #keyPath(ignoreTypos)) }
+    set(n) { S.set(n, #keyPath(ignoreTypos)) }
+  }
+
+  static var addSynonyms: Bool {
+    get { return S.get(true, #keyPath(addSynonyms)) }
+    set(n) { S.set(n, #keyPath(addSynonyms)) }
   }
 
   static var showOldMnemonic: Bool {

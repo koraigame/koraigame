@@ -50,15 +50,13 @@ class SettingsViewController: UITableViewController {
   private func rerender() {
     let model = TKMMutableTableModel(tableView: tableView)
 
-    if #available(iOS 13.0, *) {
-      model.addSection("App")
-      model.add(TKMBasicModelItem(style: .value1,
-                                  title: "UI Appearance",
-                                  subtitle: Settings.interfaceStyle.description,
-                                  accessoryType: .disclosureIndicator,
-                                  target: self,
-                                  action: #selector(didTapInterfaceStyle(_:))))
-    }
+    model.addSection("App")
+    model.add(TKMBasicModelItem(style: .value1,
+                                title: "UI Appearance",
+                                subtitle: Settings.interfaceStyle.description,
+                                accessoryType: .disclosureIndicator,
+                                target: self,
+                                action: #selector(didTapInterfaceStyle(_:))))
 
     model.addSection("Notifications")
     model.add(TKMSwitchModelItem(style: .default,

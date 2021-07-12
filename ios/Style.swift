@@ -37,6 +37,7 @@ private func AdaptiveColor(light: UIColor, dark: UIColor) -> UIColor {
       }
     }
   } else {
+    if Settings.interfaceStyle == .dark { return dark }
     return light
   }
 }

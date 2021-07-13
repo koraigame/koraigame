@@ -161,6 +161,11 @@ struct A<T: Sequence, E: RawRepresentable> where T.Element == E, E.RawValue: Cod
     get { return E.get(InterfaceStyle.system, #keyPath(interfaceStyle)) }
     set(n) { E.set(n, #keyPath(interfaceStyle)) }
   }
+  
+  static var upcomingTypeOverSRS: Bool {
+    get { return S.get(false, #keyPath(upcomingTypeOverSRS)) }
+    set(n) { S.set(n, #keyPath(upcomingTypeOverSRS)) }
+  }
 
   static var notificationsAllReviews: Bool {
     get { return S.get(false, #keyPath(notificationsAllReviews)) }

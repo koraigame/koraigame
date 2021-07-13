@@ -187,7 +187,7 @@ struct A<T: Sequence, E: RawRepresentable> where T.Element == E, E.RawValue: Cod
     set(n) { S.set(n, #keyPath(prioritizeCurrentLevel)) }
   }
 
-  static var lessonOrder: [TKMSubject.TypeEnum] {
+  static var lessonTypeOrder: [TKMSubject.TypeEnum] {
     get { return A.get([.radical, .kanji, .vocabulary], "lessonOrder") }
     set(n) { A.set(n, "lessonOrder") }
   }
@@ -215,6 +215,16 @@ struct A<T: Sequence, E: RawRepresentable> where T.Element == E, E.RawValue: Cod
   static var reviewOrder: ReviewOrder {
     get { return E.get(ReviewOrder.random, #keyPath(reviewOrder)) }
     set(n) { E.set(n, #keyPath(reviewOrder)) }
+  }
+  
+  static var reviewTypeOrder: [TKMSubject.TypeEnum] {
+    get { return A.get([.unknown, .unknown, .unknown], "reviewTypeOrder") }
+    set(n) { A.set(n, "reviewTypeOrder") }
+  }
+  
+  static var typeOrderPrecedence: Bool {
+    get { return S.get(false, #keyPath(typeOrderPrecedence)) }
+    set(n) { S.set(n, #keyPath(typeOrderPrecedence)) }
   }
 
   static var reviewBatchSize: Int {

@@ -92,11 +92,11 @@ class SettingsViewController: UITableViewController {
                                  target: self,
                                  action: #selector(prioritizeCurrentLevelChanged(_:))))
     model.add(TKMBasicModelItem(style: .value1,
-                                title: "Lesson order",
-                                subtitle: lessonOrderValueText,
+                                title: "Lesson type order",
+                                subtitle: lessonTypeOrderValueText,
                                 accessoryType: .disclosureIndicator,
                                 target: self,
-                                action: #selector(didTapLessonOrder(_:))))
+                                action: #selector(didTapLessonTypeOrder(_:))))
     model.add(TKMBasicModelItem(style: .value1,
                                 title: "Lesson batch size",
                                 subtitle: lessonBatchSizeText,
@@ -135,6 +135,18 @@ class SettingsViewController: UITableViewController {
                                 accessoryType: .disclosureIndicator,
                                 target: self,
                                 action: #selector(didTapReviewOrder(_:))))
+    model.add(TKMBasicModelItem(style: .value1,
+                                title: "Review type order",
+                                subtitle: reviewTypeOrderValueText,
+                                accessoryType: .disclosureIndicator,
+                                target: self,
+                                action: #selector(didTapReviewTypeOrder(_:))))
+    model.add(TKMSwitchModelItem(style: .subtitle,
+                                 title: "Type order precedence",
+                                 subtitle: "Type order sorts before item order",
+                                 on: Settings.typeOrderPrecedence,
+                                 target: self,
+                                 action: #selector(typeOrderPrecedenceChanged(_:))))
     model.add(TKMBasicModelItem(style: .value1,
                                 title: "Review batch size",
                                 subtitle: "\(Settings.reviewBatchSize.description)",
@@ -323,10 +335,11 @@ class SettingsViewController: UITableViewController {
 
   // MARK: - Text rendering
 
-  private var lessonOrderValueText: String {
+  private var lessonTypeOrderValueText: String {
     var parts = [String]()
-    for subjectType in Settings.lessonOrder {
+    for subjectType in Settings.lessonTypeOrder {
       parts.append(subjectType.description)
+      if subjectType == .unknown { break }
     }
     return parts.joined(separator: ", ")
   }
@@ -342,6 +355,15 @@ class SettingsViewController: UITableViewController {
 
   private var reviewOrderValueText: String {
     return Settings.reviewOrder.description
+  }
+
+  private var reviewTypeOrderValueText: String {
+    var parts = [String]()
+    for subjectType in Settings.reviewTypeOrder {
+      parts.append(subjectType.description)
+      if subjectType == .unknown { break }
+    }
+    return parts.joined(separator: ", ")
   }
 
   private var taskOrderValueText: String {
@@ -383,6 +405,10 @@ class SettingsViewController: UITableViewController {
 
   @objc private func expandSubmitButtonChanged(_ switchView: UISwitch) {
     Settings.expandSubmitButton = switchView.isOn
+  }
+
+  @objc private func typeOrderPrecedenceChanged(_ switchView: UISwitch) {
+    Settings.typeOrderPrecedence = switchView.isOn
   }
 
   @objc private func groupMeaningReadingSwitchChanged(_ switchView: UISwitch) {
@@ -551,8 +577,8 @@ class SettingsViewController: UITableViewController {
 
   // MARK: - Tap handlers
 
-  @objc private func didTapLessonOrder(_: TKMBasicModelItem) {
-    performSegue(withIdentifier: "lessonOrder", sender: self)
+  @objc private func didTapLessonTypeOrder(_: TKMBasicModelItem) {
+    performSegue(withIdentifier: "lessonTypeOrder", sender: self)
   }
 
   @objc private func didTapLessonBatchSize(_: TKMBasicModelItem) {
@@ -573,6 +599,10 @@ class SettingsViewController: UITableViewController {
 
   @objc private func didTapReviewOrder(_: TKMBasicModelItem) {
     performSegue(withIdentifier: "reviewOrder", sender: self)
+  }
+
+  @objc private func didTapReviewTypeOrder(_: TKMBasicModelItem) {
+    performSegue(withIdentifier: "reviewTypeOrder", sender: self)
   }
 
   @objc private func didTapInterfaceStyle(_: TKMBasicModelItem) {

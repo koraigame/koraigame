@@ -20,6 +20,7 @@
   case newestAvailableFirst = 5
   case oldestAvailableFirst = 6
   case descendingSRSStage = 7
+  case longestRelativeWait = 8
 
   var description: String {
     switch self {
@@ -30,6 +31,7 @@
     case .lowestLevelFirst: return "Lowest level first"
     case .newestAvailableFirst: return "Newest available first"
     case .oldestAvailableFirst: return "Oldest available first"
+    case .longestRelativeWait: return "Longest relative wait"
     }
   }
 }
@@ -273,6 +275,21 @@ struct A<T: Sequence, E: RawRepresentable> where T.Element == E, E.RawValue: Cod
   static var minimizeReviewPenalty: Bool {
     get { return S.get(true, #keyPath(minimizeReviewPenalty)) }
     set(n) { S.set(n, #keyPath(minimizeReviewPenalty)) }
+  }
+
+  static var pausePartiallyCorrect: Bool {
+    get { return S.get(false, #keyPath(pausePartiallyCorrect)) }
+    set(n) { S.set(n, #keyPath(pausePartiallyCorrect)) }
+  }
+  
+  static var ankiMode: Bool {
+    get { return S.get(false, #keyPath(ankiMode)) }
+    set(n) { S.set(n, #keyPath(ankiMode)) }
+  }
+
+  static var enableNoteEditing: Bool {
+    get { return S.get(true, #keyPath(enableNoteEditing)) }
+    set(n) { S.set(n, #keyPath(enableNoteEditing)) }
   }
 
   static var playAudioAutomatically: Bool {

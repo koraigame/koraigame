@@ -1238,9 +1238,19 @@ import Reachability
       return 0
     }
 
-    override func updateAvailableSubjects() -> (Int, Int, [Int]) {
-      return (10, 4, [14, 8, 2, 1, 12, 42, 17, 9, 2, 0, 2, 17, 0, 0, 6, 0, 0, 0, 0, 4, 11, 0, 8,
-                      6])
+    private func createComposition(_ source: Int...) -> [ReviewComposition] {
+      var composition: [ReviewComposition] = []
+      for reviews in source {
+        composition.append(ReviewComposition(availableReviews: reviews,
+                                             countByType: [.radical: reviews],
+                                             countByCategory: [.apprentice: 0]))
+      }
+      return composition
+    }
+
+    override func updateAvailableSubjects() -> (Int, [ReviewComposition]) {
+      return (10, createComposition(4, 14, 8, 2, 1, 12, 42, 17, 9, 2, 0, 2, 17, 0, 0, 6, 0, 0, 0, 0,
+                                    4, 11, 0, 8, 6))
     }
 
     override func updateGuruKanjiCount() -> Int {
@@ -1265,7 +1275,7 @@ import Reachability
       a.subjectType = .vocabulary
       a.availableAt = 42
       a.srsStageNumber = 2
-      return Array(repeating: a, count: Int(availableSubjects.reviewCount))
+      return Array(repeating: a, count: availableReviewCount)
     }
 
     override func getStudyMaterial(subjectId _: Int32) -> TKMStudyMaterials? {

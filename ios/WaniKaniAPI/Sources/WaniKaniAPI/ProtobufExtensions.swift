@@ -130,28 +130,41 @@ public enum SRSStage: Int, CustomStringConvertible, Comparable, Strideable {
     case .burned: return .burned
     }
   }
+  
+  // Maximum value of duration to determine maximum time for an upcoming review to be
+  public static let maxDuration: TimeInterval = 10364400
 
-  public func minimumTimeUntilGuru(itemLevel: Int) -> TimeInterval {
-    let isAccelerated = itemLevel <= 2
-
-    var hours = 0
-    // From https://docs.api.wanikani.com/20170710/#additional-information
+  public func duration(_ subject: TKMSubject) -> TimeInterval {
+    // From https://docs.api.wanikani.com/20170710/#spaced-repetition-systems
     switch self {
     case .apprentice1:
-      hours += (isAccelerated ? 2 : 4)
-      fallthrough
+      return subject.isAccelerated ? 7200 : 14400
     case .apprentice2:
-      hours += (isAccelerated ? 4 : 8)
-      fallthrough
+      return subject.isAccelerated ? 14400 : 28800
     case .apprentice3:
-      hours += (isAccelerated ? 8 : 23)
-      fallthrough
+      return subject.isAccelerated ? 28800 : 82800
     case .apprentice4:
-      hours += (isAccelerated ? 23 : 47)
-    default:
-      break
+      return subject.isAccelerated ? 82800 : 169200
+    case .guru1:
+      return 601_200
+    case .guru2:
+      return 1_206_000
+    case .master:
+      return 2_588_400
+    case .enlightened:
+      return 10_364_400
+    case .unlocking, .burned:
+      return 0
     }
-    return TimeInterval(hours * 60 * 60)
+  }
+
+  public func minimumTimeUntilGuru(_ subject: TKMSubject) -> TimeInterval {
+    var time: TimeInterval = 0, stage = self
+    while stage.category == .apprentice {
+      time += stage.duration(subject)
+      stage = stage.next
+    }
+    return time
   }
 }
 
@@ -179,6 +192,8 @@ public extension TKMSubject {
     }
     return .unknown
   }
+  
+  var isAccelerated: Bool { level <= 2 }
 
   func japaneseText(imageSize: CGFloat) -> NSAttributedString {
     if !hasRadical || !radical.hasCharacterImageFile_p {
@@ -383,7 +398,7 @@ public extension TKMAssignment {
       return Date.distantPast
     }
 
-    let guruSeconds = srsStage.next.minimumTimeUntilGuru(itemLevel: Int(subject.level))
+    let guruSeconds = srsStage.next.minimumTimeUntilGuru(subject)
     return reviewDate?.addingTimeInterval(guruSeconds)
   }
 }

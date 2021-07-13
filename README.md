@@ -1,3 +1,16 @@
+Koraigame is the legacy/experimental fork of Tsurukame. It currently supports iOS 8+.
+
+Koraigame version numbers are in the format: A+B.C, where:
+
+* A is the commit of Tsurukame it's based off of
+* B is the number of sequential commits without introducing features
+* C is the number of feature commits.
+
+
+The following content is copied verbatim from the Tsurukame README:
+
+---
+
 The content displayed in Tsurukame comes from WaniKani, and its use is covered by
 https://www.wanikani.com/terms, NOT the terms of the Tsurukame software license.
 

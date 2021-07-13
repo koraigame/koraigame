@@ -83,21 +83,21 @@ class ReviewSummaryViewController: UITableViewController, SubjectDelegate {
   @IBAction private func doneClicked() {
     navigationController?.popToRootViewController(animated: true)
   }
-  
+
   @IBAction private func showAnswersChanged(_ switchView: UISwitch) {
     Settings.reviewSummaryViewShowAnswers = switchView.isOn
     setShowAnswers(switchView.isOn, true)
   }
-  
+
   func setShowAnswers(_ showAnswers: Bool, _ animated: Bool) {
-    for section in 0..<model.sectionCount {
+    for section in 0 ..< model.sectionCount {
       for item in model.items(inSection: section) {
         if let subjectModelItem = item as? SubjectModelItem {
           subjectModelItem.showAnswers = showAnswers
         }
       }
     }
-    
+
     for cell in tableView.visibleCells {
       if let subjectCell = cell as? SubjectModelView {
         subjectCell.setShowAnswers(showAnswers, animated: animated)

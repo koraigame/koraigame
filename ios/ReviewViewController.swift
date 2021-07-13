@@ -334,7 +334,8 @@ class ReviewViewController: UIViewController, UITextFieldDelegate, SubjectDelega
     let truncatedDate =
       Date(timeIntervalSince1970: Double((Int(Date().timeIntervalSince1970) / 3600) * 3600))
     let subject = services.localCachingClient.getSubject(id: assignment.subjectID)!
-    return truncatedDate.timeIntervalSince(assignment.availableAtDate) / assignment.srsStage.duration(subject)
+    return truncatedDate.timeIntervalSince(assignment.availableAtDate) / assignment.srsStage
+      .duration(subject)
   }
 
   @objc public var activeQueueLength: Int {

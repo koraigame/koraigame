@@ -49,7 +49,8 @@ class UpcomingReviewsViewController: UITableViewController {
   private func combineData(_ a: ReviewData, _ b: ReviewData) -> ReviewData {
     return ReviewData(availableReviews: a.availableReviews + b.availableReviews,
                       countByType: a.countByType.merging(b.countByType, uniquingKeysWith: +),
-                      countByCategory: a.countByCategory.merging(b.countByCategory, uniquingKeysWith: +))
+                      countByCategory: a.countByCategory.merging(b.countByCategory,
+                                                                 uniquingKeysWith: +))
   }
 
   private func getReviewData() -> [ReviewData] {
@@ -67,7 +68,8 @@ class UpcomingReviewsViewController: UITableViewController {
 
     func formatData(hour: Int) -> String {
       let data = reviewData[hour],
-          difference = data.availableReviews - (hour > 0 ? reviewData[hour - 1].availableReviews : 0)
+          difference = data
+          .availableReviews - (hour > 0 ? reviewData[hour - 1].availableReviews : 0)
       return "\(data.availableReviews) (+\(difference)): " +
         (Settings.upcomingTypeOverSRS ? data.countByType.reduce("") {
           $0.isEmpty ? "\($1.value)" : "\($0)/\($1.value)"
@@ -77,7 +79,8 @@ class UpcomingReviewsViewController: UITableViewController {
     }
 
     for hour in 0 ..< reviewData.count {
-      if hour > 0, reviewData[hour].availableReviews == reviewData[hour - 1].availableReviews { continue }
+      if hour > 0,
+         reviewData[hour].availableReviews == reviewData[hour - 1].availableReviews { continue }
       model.add(TKMBasicModelItem(style: .value1,
                                   title: date.string(hour: hour),
                                   subtitle: formatData(hour: hour),

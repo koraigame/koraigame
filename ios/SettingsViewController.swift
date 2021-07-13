@@ -481,7 +481,7 @@ class SettingsViewController: UITableViewController {
   @objc private func ankiModeSwitchChanged(_ switchView: UISwitch) {
     Settings.ankiMode = switchView.isOn
   }
-  
+
   @objc private func enableNoteEditingSwitchChanged(_ switchView: UISwitch) {
     Settings.enableNoteEditing = switchView.isOn
   }

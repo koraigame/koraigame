@@ -169,9 +169,17 @@ private func postNotificationOnMainQueue(_ notification: Notification.Name) {
       if assignment.isLessonStage {
         lessonCount += 1
       } else if assignment.isReviewStage {
-        let stage = assignment.srsStage,
-            interval = max(0, assignment.availableAtDate.timeIntervalSince(now))
-        iterateValidReview(assignment.subjectType, hours: Int(ceil(interval / 3600)), stage: stage)
+        var stage = assignment.srsStage,
+            interval = max(0, assignment.availableAtDate.timeIntervalSince(now)),
+            subject = getSubject(id: assignment.subjectID)!
+        repeat {
+          iterateValidReview(assignment.subjectType, hours: Int(ceil(interval / 3600)),
+                             stage: stage)
+          if Settings.addProspectiveReviews {
+            stage = stage.next
+            interval += stage.duration(subject)
+          }
+        } while Settings.addProspectiveReviews && stage != .burned
       }
     }
 

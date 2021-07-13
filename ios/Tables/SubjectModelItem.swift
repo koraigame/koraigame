@@ -129,6 +129,8 @@ class SubjectModelView: TKMModelCell {
       : TKMStyle.japaneseFont(size: kFontSize)
     meaningLabel.font = item.meaningWrong ? UIFont.boldSystemFont(ofSize: kFontSize)
       : UIFont.systemFont(ofSize: kFontSize)
+
+    setShowAnswers(item.showAnswers, animated: false)
   }
 
   private func formattedInterval(until toDate: Date, label: String) -> String {

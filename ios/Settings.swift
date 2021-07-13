@@ -352,6 +352,11 @@ struct A<T: Sequence, E: RawRepresentable> where T.Element == E, E.RawValue: Cod
     set(n) { S.set(n, #keyPath(animatePlusOne)) }
   }
 
+  static var reviewSummaryViewShowAnswers: Bool {
+    get { return S.get(true, #keyPath(reviewSummaryViewShowAnswers)) }
+    set(n) { S.set(n, #keyPath(reviewSummaryViewShowAnswers)) }
+  }
+
   static var subjectCatalogueViewShowAnswers: Bool {
     get { return S.get(true, #keyPath(subjectCatalogueViewShowAnswers)) }
     set(n) { S.set(n, #keyPath(subjectCatalogueViewShowAnswers)) }
